@@ -1,25 +1,24 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
-class button extends StatefulWidget {
+class ButtonWidget extends StatefulWidget {
   final double width;
   final double height;
   final String title;
-  final void Function()? onpressed;
+  final VoidCallback? onPressed; // Use VoidCallback for no parameters
 
-  const button(
-      {super.key,
-      required this.title,
-      required this.width,
-      required this.height,
-      this.onpressed});
+  const ButtonWidget({
+    super.key,
+    required this.title,
+    required this.width,
+    required this.height,
+    this.onPressed, // Make onPressed optional
+  });
 
   @override
-  State<button> createState() => _buttonState();
+  State<ButtonWidget> createState() => _ButtonWidgetState();
 }
 
-class _buttonState extends State<button> {
+class _ButtonWidgetState extends State<ButtonWidget> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -31,12 +30,7 @@ class _buttonState extends State<button> {
             Colors.amberAccent,
           ),
         ),
-        onPressed: () {
-          setState(() {
-            widget.onpressed;
-          });
-          ;
-        },
+        onPressed: widget.onPressed, // Directly use the callback
         child: Text(
           widget.title,
           style: const TextStyle(

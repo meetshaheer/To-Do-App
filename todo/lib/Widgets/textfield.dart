@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 
-class textfield extends StatefulWidget {
-  final String hint_text;
-  final TextEditingController editcontroller;
+class TextFieldWidget extends StatefulWidget {
+  final String hintText;
+  final TextEditingController editController;
 
-  const textfield(
-      {super.key, required this.hint_text, required this.editcontroller});
+  const TextFieldWidget({
+    super.key,
+    required this.hintText,
+    required this.editController,
+  });
 
   @override
-  State<textfield> createState() => _textfieldState();
+  State<TextFieldWidget> createState() => _TextFieldWidgetState();
 }
 
-class _textfieldState extends State<textfield> {
+class _TextFieldWidgetState extends State<TextFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return TextField(
@@ -23,12 +26,12 @@ class _textfieldState extends State<textfield> {
           right: 20,
         ),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
-        hintText: widget.hint_text,
+        hintText: widget.hintText,
         hintStyle: const TextStyle(
           fontWeight: FontWeight.w300,
         ),
       ),
-      controller: widget.editcontroller,
+      controller: widget.editController,
     );
   }
 }
