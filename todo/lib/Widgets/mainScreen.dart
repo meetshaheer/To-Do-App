@@ -14,8 +14,13 @@ class FirstScreen extends StatefulWidget {
 }
 
 class _FirstScreenState extends State<FirstScreen> {
-  TextEditingController titleController = TextEditingController();
-  TextEditingController noteController = TextEditingController();
+  TextEditingController titleAddController = TextEditingController();
+  TextEditingController noteAddController = TextEditingController();
+
+  ///
+
+  TextEditingController titleEditController = TextEditingController();
+  TextEditingController noteEditController = TextEditingController();
 
   List<List<String>> notes = [
     ["Grocery Shopping", "Buy milk, eggs, and bread."],
@@ -27,16 +32,58 @@ class _FirstScreenState extends State<FirstScreen> {
   ];
 
   addItem() {
-    String title = titleController.text;
-    String note = noteController.text;
+    String title = titleAddController.text;
+    String note = noteAddController.text;
     if (title.isNotEmpty && note.isNotEmpty) {
       setState(() {
         notes.insert(0, [title, note]);
       });
-      titleController.clear();
-      noteController.clear();
+      titleAddController.clear();
+      noteAddController.clear();
       print(notes);
     }
+  }
+
+  editItem({myindex}) {
+    return AlertDialog(
+      title: const Text("Update Value"),
+      actions: [
+        TextFieldWidget(
+            hintText: "Please Enter The Title",
+            editController: titleEditController),
+        SizedBox(
+          height: 20,
+        ),
+        //
+        TextFieldWidget(
+            hintText: "Please Enter The Note",
+            editController: noteEditController),
+        const SizedBox(
+          height: 30,
+        ),
+        ButtonWidget(
+          title: "Update Value",
+          width: double.infinity,
+          height: 60,
+          onPressed: () {
+            setState(() {
+              notes[myindex][0] = titleEditController.text;
+              //
+              notes[myindex][1] = noteEditController.text;
+
+              //
+              Navigator.pop(context);
+            });
+          },
+        )
+      ],
+    );
+  }
+
+  removeItem({myindex}) {
+    setState(() {
+      notes.removeAt(myindex);
+    });
   }
 
   @override
@@ -90,7 +137,7 @@ class _FirstScreenState extends State<FirstScreen> {
                       ),
                       child: TextFieldWidget(
                         hintText: "Add Title Here",
-                        editController: titleController,
+                        editController: titleAddController,
                       ),
                     ),
                     Padding(
@@ -101,7 +148,7 @@ class _FirstScreenState extends State<FirstScreen> {
                       ),
                       child: TextFieldWidget(
                         hintText: "Add Notes Here",
-                        editController: noteController,
+                        editController: noteAddController,
                       ),
                     ),
                     Padding(
@@ -190,7 +237,54 @@ class _FirstScreenState extends State<FirstScreen> {
                                                   fontSize: 17,
                                                 ),
                                               ),
-                                            )
+                                            ),
+
+                                            ///
+                                            /// Edit Button Onpressed
+                                            ///
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 160),
+                                              child: IconButton(
+                                                onPressed: () {
+                                                  setState(
+                                                    () {
+                                                      showDialog(
+                                                        context: context,
+                                                        builder: (context) {
+                                                          titleEditController
+                                                                  .text =
+                                                              notes[index][0];
+                                                          noteEditController
+                                                                  .text =
+                                                              notes[index][01];
+                                                          return editItem(
+                                                              myindex: index);
+                                                        },
+                                                      );
+                                                    },
+                                                  );
+                                                },
+                                                icon: const Icon(
+                                                  Icons.edit,
+                                                ),
+                                              ),
+                                            ),
+
+                                            ///
+                                            /// Delete Button Onpressed
+                                            ///
+                                            Padding(
+                                              padding: const EdgeInsets.only(),
+                                              child: IconButton(
+                                                onPressed: () {
+                                                  removeItem(myindex: index);
+                                                },
+                                                icon: const Icon(
+                                                  Icons.delete,
+                                                ),
+                                              ),
+                                            ),
                                           ],
                                         ),
                                       )
