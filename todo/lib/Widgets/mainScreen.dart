@@ -247,12 +247,11 @@ class _FirstScreenState extends State<FirstScreen> {
                                                   left: 160),
                                               child: IconButton(
                                                 onPressed: () {
-                                                  setState(
-                                                    () {
-                                                      showDialog(
+                                                  setState(() {
+                                                    showModalBottomSheet(
                                                         context: context,
                                                         builder: (context) {
-                                                          titleEditController
+                                                           titleEditController
                                                                   .text =
                                                               notes[index][0];
                                                           noteEditController
@@ -260,10 +259,23 @@ class _FirstScreenState extends State<FirstScreen> {
                                                               notes[index][01];
                                                           return editItem(
                                                               myindex: index);
-                                                        },
+                                                        });
+                                                  }
+                                                      // showDialog(
+                                                      //   context: context,
+                                                      //   builder: (context) {
+                                                      //     titleEditController
+                                                      //             .text =
+                                                      //         notes[index][0];
+                                                      //     noteEditController
+                                                      //             .text =
+                                                      //         notes[index][01];
+                                                      //     return editItem(
+                                                      //         myindex: index);
+                                                      //   },
+                                                      // );
+                                                      // //
                                                       );
-                                                    },
-                                                  );
                                                 },
                                                 icon: const Icon(
                                                   Icons.edit,
